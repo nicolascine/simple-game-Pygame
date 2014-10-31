@@ -1,63 +1,29 @@
-import pygame
+import pygame, random
+pygame.init()
+pantalla = pygame.display.set_mode((500,500))
+salir = False
+reloj1 = pygame.time.Clock()
+listarec = []
 
-def main():
-	pygame.init()
-	pantalla = pygame.display.set_mode([500,500])
-	pygame.display.set_caption(" Mi primer juego en python :) ")
-	salir = False
-	reloj1 = pygame.time.Clock()
-
-	#colores ~
-	blanco = (255,255,255)
-	rojo = (200,20,50)
-	azul = (10,20,244)
-	verde = (127,255,0)
-
-	#superficies
-	s1 = pygame.Surface((100,150))
-	s2 = pygame.Surface([50,50])
+for x in range(15):
+	x = random.randrange(480)
+	y = random.randrange(480)
+	w = random.randrange(15,45)
+	h = random.randrange(20,60)
 	
+	listarec.append(pygame.Rect(x,y,w,h))
 
-	#Formas -> rectangulos
-	r1 = pygame.Rect(390,150,10,45)
-	
-	#coloreado de superficies y formas
-	s1.fill(rojo)
-	s2.fill(azul)
+while salir != True:
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			salir = True
 
-	while salir != True:
+	reloj1.tick(20)
+	pantalla.fill((0,0,0))
 
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				salir = True
+	for recs in listarec:
+		pygame.draw.rect(pantalla, (200,0,0), recs)
 
+	pygame.display.update()
 
-			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_LEFT:
-					r1 = r1.move(-10,0)
-				if event.key == pygame.K_RIGHT:
-					r1 = r1.move(10,0)
-				if event.key == pygame.K_DOWN:
-					r1 = r1.move(0,10)
-				if event.key == pygame.K_UP:
-					r1 = r1.move(0,-10)
-
-		
-		reloj1.tick(20) #fijo a 20fps
-		
-		pantalla.fill(blanco)
-
-		#display de superficies y formas
-		pantalla.blit(s1, [50, 70])
-		pantalla.blit(s2, [50, 60])
-
-		#draw~
-		pygame.draw.rect(pantalla, verde, r1)
-
-		pygame.display.update()
-
-	pygame.quit()
-
-
-
-main()
+pygame.quit
